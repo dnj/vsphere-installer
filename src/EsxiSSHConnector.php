@@ -73,9 +73,11 @@ class EsxiSSHConnector
 
     protected function testThePort(string $host, int $port): void
     {
-        $fp = fsockopen($host, $port, $errno, $errstr, 10);
+        $fp = @fsockopen($host, $port, $errno, $errstr, 10);
         if (false !== $fp) {
             fclose($fp);
+
+            return;
         }
         throw new Exception("Cannot open connection to {$host}:{$port} with-in 10 seconds");
     }
